@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MyMain {
     // **************************
@@ -14,13 +15,23 @@ public class MyMain {
 
     // Wrapper Method
     public static boolean binarySearch(int[] arr, int num) {
+
         return binarySearchTR(arr, num, 0, arr.length-1);
     }
 
     // Tail recursive method:
     public static boolean binarySearchTR(int[] arr, int num, int lowerBound, int upperBound) {
-        // YOUR CODE HERE
-        return false;
+        int middleI = lowerBound+(upperBound-lowerBound/2);
+        if(upperBound<lowerBound){
+            return false;
+        }
+        else if(arr[middleI]>num){
+            return binarySearchTR(arr, num, lowerBound, middleI-1);
+        }
+        else if(arr[middleI]<num){
+            return binarySearchTR(arr, num, middleI+1, upperBound);
+        }
+        return true;
     }
 
 
@@ -68,7 +79,33 @@ public class MyMain {
     // Then we need to copy the rest of the array
 
     public static int[] merge(int[] arr1, int[] arr2) {
-        // YOUR CODE HERE
-        return null;
+        int idx1 = 0;
+        int idx2 = 0;
+        int outputIdx = 0;
+        int[] newArr = new int[arr1.length+arr2.length];
+        while(outputIdx<(arr1.length+arr2.length)){
+            if(idx1>=arr1.length){
+                newArr[outputIdx] = arr2[idx2];
+                idx2++;
+                outputIdx++;
+            }
+            else if(idx2>=arr2.length){
+                newArr[outputIdx] = arr1[idx1];
+                idx1++;
+                outputIdx++;
+            }
+            else{
+                if(arr1[idx1]<arr2[idx2]){
+                    newArr[outputIdx] = arr1[idx1];
+                    idx1++;
+                }
+                else{
+                    newArr[outputIdx] = arr2[idx2];
+                    idx2++;
+                }
+                outputIdx++;
+            }
+        }
+        return newArr;
     }
 }
